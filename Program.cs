@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Timers;
 
 namespace HelloWorld
 {
@@ -197,6 +198,8 @@ namespace HelloWorld
                 Console.WriteLine("Cannot access file {0}", exc.Message);
             }
 
+            // Timer example
+            TimerExample();
         }
 
         private static void PrintHeader(string header)
@@ -212,7 +215,36 @@ namespace HelloWorld
             Console.BackgroundColor =  currentBackground;
             Console.ForegroundColor = currentForeground;
         }
+
+        private static void TimerExample()
+        {
+            Timer myTimer = new Timer(2000);
+            myTimer.Elapsed += MyTimer_Elapsed0;
+            myTimer.Elapsed += MyTimer_Elapsed1;
+            myTimer.Start();
+
+            Console.WriteLine("Press <enter> to remove Elapsed1 handler");
+            Console.ReadLine();
+
+            myTimer.Elapsed -= MyTimer_Elapsed1;
+
+            Console.WriteLine("Press <enter> to remove go on with examples");
+            Console.ReadLine();
+
+        }
+
+        private static void MyTimer_Elapsed0(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Elapsed0: {0:HH:mm:ss.fff}", e.SignalTime);
+        }
+
+        private static void MyTimer_Elapsed1(object sender, ElapsedEventArgs e)
+        {
+            Console.WriteLine("Elapsed1: {0:HH:mm:ss.fff}", e.SignalTime);
+        }
+
     }
+
 
     class Todo
     {
